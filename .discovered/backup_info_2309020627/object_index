@@ -1,0 +1,7 @@
+mailbox	pingjob@pingjob.com
+database	admin_	localhost:3306	mysql
+database	clientfyi_final	localhost:3306	mysql
+site	pingjob.com
+dnszone	pingjob.com
+certificate	Pingjob	pingjob.com
+certificate	Lets Encrypt pingjob.com	pingjob.com

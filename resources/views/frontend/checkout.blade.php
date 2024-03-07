@@ -19,17 +19,25 @@
                         <form method="post" action="{{route('checkout.payment', $package->id)}}">
                             @csrf
 
-                            <h4>Package: {{$package->package_name}}</h4>
-
-                            <p>@lang('app.premium_job') : {{$package->premium_job}}</p>
-
-                            <p class="text-success">@lang('app.price') : {!! get_amount($package->price) !!}</p>
+                            <div class="d-flex mb-4">
+                                <div class="w-50">
+                                    <h4>Package: {{$package->package_name}}</h4>
+                                    <p>@lang('app.premium_job') : {{$package->premium_job}}</p>
+                                    <p class="text-success">@lang('app.price') : {!! get_amount($package->price) !!}</p>
+                                </div>
+                                <div class="text-end w-50">
+                                    <label>Name
+                                        <input type="text" placeholder="Name" class="form-control" name="name" />
+                                    </label>
+                                    <label>Email
+                                        <input type="text" placeholder="Email" class="form-control" name="email" />
+                                    </label>
+                                </div>
+                            </div>
 
                             <h4 class="text-muted">Choose your gateway</h4>
                             <div class="checkout-gateways-wrap">
-
                                 <div class="checkout-gateway bg-light p-3 my-3">
-
                                     <label>
 
                                         <input type="radio" name="gateway" value="paypal" checked="checked"> @lang('app.paypal')
@@ -58,3 +66,34 @@
 </body>
 
 </html>
+<script>
+    $(document).ready(function() {
+        $("#checkout").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: "{{route('checkout.payment', $package->id)}}",
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function() {
+                    $(".checkout-page").html('<div class="loader" ></div>');
+                },
+                success: function(data) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/payment/" + data,
+                        headers: {
+                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function() {
+                            $(".checkout-page").html('<div class="loader" ></div>');
+                        },
+                        success: function(data) {
+                            $(".checkout-page").html(data);
+                        }
+                    });
+                }
+            });
+        })
+    })
+</script>

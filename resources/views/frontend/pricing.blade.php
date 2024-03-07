@@ -72,7 +72,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                        <div class="modal-body text-center" id='body{{$package->id}}'>
+                        <div class="modal-body" id='body{{$package->id}}'>
 
                         </div>
                         <div class="modal-footer">

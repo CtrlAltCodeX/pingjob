@@ -66,7 +66,16 @@ class PaymentController extends Controller
 
     public function checkoutPost(Request $request, $package_id)
     {
-        $user = Auth::user();
+        if(Auth::user()){
+            $id = Auth::user()->id;
+            $name = Auth::user()->name;
+            $email = Auth::user()->email;
+        } else {
+            $id = null;
+            $name = $request->name;
+            $email = $request->email;
+        }
+
         $package = Pricing::find($package_id);
         $gateway = $request->gateway;
         $currency = get_option('currency_sign');
@@ -80,9 +89,9 @@ class PaymentController extends Controller
         $transaction_id = strtoupper($transaction_id);
 
         $paymentData = [
-            'user_id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
+            'user_id' => $id,
+            'name' => $name,
+            'email' => $email,
             'package_name' => $package->package_name,
             'package_id' => $package_id,
             'amount' => $package->price,

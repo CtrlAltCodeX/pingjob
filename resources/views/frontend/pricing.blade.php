@@ -73,6 +73,7 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body" id='body{{$package->id}}'>
+                            <div id='loader{{$package->id}}' class="text-center"></div>
 
                         </div>
                         <div class="modal-footer">
@@ -99,7 +100,7 @@
                 type: 'GET',
                 url: "/checkout/" + id,
                 beforeSend: function() {
-                    $("#body" + id).html('<div class="loader" ></div>');
+                    $("#loader" + id).html('<div class="loader" ></div>');
                 },
                 success: function(data) {
                     $("#body" + id).html(data);

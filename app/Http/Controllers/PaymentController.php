@@ -104,6 +104,8 @@ class PaymentController extends Controller
 
         $payment = Payment::create($paymentData);
 
+        return $payment->local_transaction_id;
+
         return redirect(route('payment', $payment->local_transaction_id));
     }
 
@@ -156,7 +158,7 @@ class PaymentController extends Controller
     public function paypalRedirect(Request $request, $transaction_id)
     {
         $payment = Payment::whereLocalTransactionId($transaction_id)->whereStatus('initial')->first();
-
+        
         $currency = get_option('currency_sign');
 
         // PayPal settings

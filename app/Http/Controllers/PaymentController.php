@@ -66,7 +66,7 @@ class PaymentController extends Controller
 
     public function checkoutPost(Request $request, $package_id)
     {
-        if(Auth::user()){
+        if (Auth::user()) {
             $id = Auth::user()->id;
             $name = Auth::user()->name;
             $email = Auth::user()->email;
@@ -85,7 +85,7 @@ class PaymentController extends Controller
         while ((Payment::whereLocalTransactionId($transaction_id)->count()) > 0) {
             $transaction_id = 'reid' . time() . Str::random(5);
         }
-        
+
         $transaction_id = strtoupper($transaction_id);
 
         $paymentData = [
@@ -158,7 +158,7 @@ class PaymentController extends Controller
     public function paypalRedirect(Request $request, $transaction_id)
     {
         $payment = Payment::whereLocalTransactionId($transaction_id)->whereStatus('initial')->first();
-        
+
         $currency = get_option('currency_sign');
 
         // PayPal settings
@@ -288,10 +288,11 @@ class PaymentController extends Controller
         }
     }
 
-
     public function paymentBankTransferReceive(Request $request, $transaction_id)
     {
-        $payment = Payment::whereLocalTransactionId($transaction_id)->where('status', '!=', 'success')->first();
+        $payment = Payment::whereLocalTransactionId($transaction_id)
+            ->where('status', '!=', 'success')
+            ->first();
 
         $rules = [
             'bank_swift_code' => 'required',
@@ -307,7 +308,6 @@ class PaymentController extends Controller
             'payment_method' => 'bank_transfer',
             'status' => 'pending',
             'currency' => $payment->currency,
-
             'bank_swift_code' => $request->bank_swift_code,
             'account_number' => $request->account_number,
             'branch_name' => $request->branch_name,

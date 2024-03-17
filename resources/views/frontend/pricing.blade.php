@@ -76,9 +76,9 @@
                             <div id='loader{{$package->id}}' class="text-center"></div>
 
                         </div>
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>

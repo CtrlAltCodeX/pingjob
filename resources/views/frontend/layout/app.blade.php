@@ -1,5 +1,5 @@
 @php
-    use App\Helper\Functions;
+use App\Helper\Functions;
 @endphp
 <!DOCTYPE html>
 <html>
@@ -9,8 +9,7 @@
     <title>PingJob | Empowering the job seeker</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146678787-1"></script>
@@ -75,23 +74,21 @@
     <!-- Zoho Analytics -->
     <script src="https://cdn.pagesense.io/js/pingjobinc/129e50549beb4b799b6446daea4d8016.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
     </script>
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5309331350958816"
         crossorigin="anonymous"></script> -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="./assets/css/style.min.css">
     <link rel="stylesheet" href="./assets/css/custom.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('css')
+
     <style>
         @media screen and (max-width : 768px) {
             table.topClientTab {
@@ -178,8 +175,7 @@
 <body style="margin:0px;padding:0px;">
     {{-- top nav --}}
     <section id="top-nav" class="mainTopHeader">
-        <nav
-            class="navbar navbar-expand-md navbar-light navbar-laravel {{ request()->routeIs('home') ? 'transparent-navbar' : '' }}">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel {{ request()->routeIs('home') ? 'transparent-navbar' : '' }}">
             <div class="headerContent">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <h2>
@@ -193,57 +189,49 @@
                         One-click apply.
                     <p>
                 </div>
-                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                    class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
             </div>
             <!-- Right Side Of Navbar -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto topnav-right">
                     <li class="nav-item postjob-button">
-                        <a class="nav-link btn btn-theme text-white" href="{{ route('post_new_job') }}"><i
-                                class="la la-save"></i>{{ __('app.post_new_job') }} </a>
+                        <a class="nav-link btn btn-theme text-white" href="{{ route('post_new_job') }}"><i class="la la-save"></i>{{ __('app.post_new_job') }} </a>
                     </li>
                     <!-- Authentication Links -->
                     @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}"><i class="la la-sign-in"></i>
-                                {{ __('app.login') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            @if (Route::has('new_register'))
-                                <a class="nav-link" href="{{ route('new_register') }}"><i class="la la-user-plus"></i>
-                                    {{ __('app.register') }}</a>
-                            @endif
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}"><i class="la la-sign-in"></i>
+                            {{ __('app.login') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (Route::has('new_register'))
+                        <a class="nav-link" href="{{ route('new_register') }}"><i class="la la-user-plus"></i>
+                            {{ __('app.register') }}</a>
+                        @endif
+                    </li>
                     @else
-                        <a class="nav-link btn btn-dark  text-white ml-lg-2 dashboard_button_dark"
-                            href="{{ route('dashboard') }}"><i class="la la-dashboard"></i>{{ __('app.dashboard') }}
+                    <a class="nav-link btn btn-dark  text-white ml-lg-2 dashboard_button_dark" href="{{ route('dashboard') }}"><i class="la la-dashboard"></i>{{ __('app.dashboard') }}
+                    </a>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="la la-user"></i> {{ Auth::user()->name }}
+                            <span class="badge badge-warning"><i class="la la-briefcase"></i>{{ auth()->user()->premium_jobs_balance }}</span>
+                            <span class="caret"></span>
                         </a>
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="la la-user"></i> {{ Auth::user()->name }}
-                                <span class="badge badge-warning"><i
-                                        class="la la-briefcase"></i>{{ auth()->user()->premium_jobs_balance }}</span>
-                                <span class="caret"></span>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+
+
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
                     @endguest
                 </ul>
             </div>
@@ -262,39 +250,24 @@
         <div id="main-footer" class="main-footer py-3 pb-5">
             <nav style="overflow:hidden;">
                 @php
-                    $total = count($categories);
+                $total = count($categories);
                 @endphp
                 <div class="nav nav-tabs" id="nav-tab" role="tablist" style="width:max-content;">
-                    <a class="nav-item nav-link active" id="category-1-nav" data-toggle="tab" href="#category-1"
-                        role="tab" data-analytics-track="click" data-analytics-key="seoTabClick"
-                        data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors"
-                        aria-controls="category-1" aria-selected="false">Categories
+                    <a class="nav-item nav-link active" id="category-1-nav" data-toggle="tab" href="#category-1" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-1" aria-selected="false">Categories
                     </a>
                     @if ($total > 30)
-                        <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2"
-                            role="tab" data-analytics-track="click" data-analytics-key="seoTabClick"
-                            data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors"
-                            aria-controls="category-2" aria-selected="false">More
-                        </a>
+                    <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-2" aria-selected="false">More
+                    </a>
                     @endif
                     @if ($total > 60)
-                        <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2"
-                            role="tab" data-analytics-track="click" data-analytics-key="seoTabClick"
-                            data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors"
-                            aria-controls="category-2" aria-selected="false">More
-                        </a>
+                    <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-2" aria-selected="false">More
+                    </a>
                     @endif
                     @if ($total > 90)
-                        <a class="nav-item nav-link" id="category-4-nav" data-toggle="tab" href="#category-4"
-                            role="tab" data-analytics-track="click" data-analytics-key="seoTabClick"
-                            data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors"
-                            aria-controls="category-4" aria-selected="false">More
-                        </a>
+                    <a class="nav-item nav-link" id="category-4-nav" data-toggle="tab" href="#category-4" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-4" aria-selected="false">More
+                    </a>
                     @endif
-                    <a class="nav-item nav-link" id="top-city-state-nav" data-toggle="tab" href="#top-city-state"
-                        role="tab" data-analytics-track="click" data-analytics-key="seoTabClick"
-                        data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Clients"
-                        aria-controls="top-city-state" aria-selected="true">State / City
+                    <a class="nav-item nav-link" id="top-city-state-nav" data-toggle="tab" href="#top-city-state" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Clients" aria-controls="top-city-state" aria-selected="true">State / City
                     </a>
                 </div>
             </nav>
@@ -302,288 +275,244 @@
                 <div class="col-lg-9 col-md-6">
                     <div class="tab-content mt-4" id="nav-tabContent" data-an-category="seoTabContent-Top Clients">
 
-                        <div class="tab-pane fade unauth-job-list active show" id="category-1" role="tabpanel"
-                            aria-labelledby="category-1-nav" data-an-category="seoTabContent-Top Clients">
+                        <div class="tab-pane fade unauth-job-list active show" id="category-1" role="tabpanel" aria-labelledby="category-1-nav" data-an-category="seoTabContent-Top Clients">
                             <div class="row">
                                 @php
-                                    $total = count($categories);
-                                    if ($total > 30) {
-                                        $per = round(30 / 3);
-                                    } else {
-                                        $per = round($total / 3);
-                                    }
+                                $total = count($categories);
+                                if ($total > 30) {
+                                $per = round(30 / 3);
+                                } else {
+                                $per = round($total / 3);
+                                }
                                 @endphp
                                 <div class="col-lg-4 col-md-6">
                                     @if ($categories->count())
-                                        <ul class="list-unstyled footer-links-homepage">
-                                            @for ($i = 0; $i < $per; $i++)
-                                                <li>
-                                                    <a
-                                                        href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                        {{ $categories[$i]->category_name }}
-                                                        <span
-                                                            class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                    </a>
-                                                </li>
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 0; $i < $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
                                             @endfor
-                                        </ul>
+                                    </ul>
                                     @endif
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     @if ($categories->count())
-                                        <ul class="list-unstyled footer-links-homepage">
-                                            @for ($i = $per; $i < $per + $per; $i++)
-                                                <li>
-                                                    <a
-                                                        href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                        {{ $categories[$i]->category_name }}
-                                                        <span
-                                                            class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                    </a>
-                                                </li>
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = $per; $i < $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
                                             @endfor
-                                        </ul>
+                                    </ul>
                                     @endif
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     @if ($categories->count())
-                                        <ul class="list-unstyled footer-links-homepage">
-                                            @for ($i = $per + $per; $i < $per + $per + $per; $i++)
-                                                <li>
-                                                    <a
-                                                        href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                        {{ $categories[$i]->category_name }}
-                                                        <span
-                                                            class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                    </a>
-                                                </li>
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = $per + $per; $i < $per + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
                                             @endfor
-                                        </ul>
+                                    </ul>
                                     @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade unauth-job-list" id="category-2" role="tabpanel"
-                            aria-labelledby="category-2-nav" data-an-category="seoTabContent-Top Clients">
+                        <div class="tab-pane fade unauth-job-list" id="category-2" role="tabpanel" aria-labelledby="category-2-nav" data-an-category="seoTabContent-Top Clients">
                             @if (count($categories) > 30)
-                                <div class="row">
-                                    @php
-                                        $total = count($categories);
-                                        $newTotal = $total - 30;
-
-                                        if ($newTotal > 30) {
-                                            $per = 10;
-                                        } else {
-                                            $per = round($newTotal / 3);
-                                        }
-                                    @endphp
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-
-                                                @for ($i = 30; $i < 30 + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 30 + $per; $i < 30 + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 30 + $per + $per; $i < 30 + $per + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="tab-pane fade unauth-job-list" id="category-3" role="tabpanel"
-                            aria-labelledby="category-3-nav" data-an-category="seoTabContent-Top Clients">
-                            @if (count($categories) > 60)
-                                <div class="row">
-                                    @php
-                                        $total = count($categories);
-                                        $newTotal = $total - 60;
-
-                                        if ($newTotal > 60) {
-                                            $per = 10;
-                                        } else {
-                                            $per = round($newTotal / 3);
-                                        }
-                                    @endphp
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-
-                                                @for ($i = 60; $i < 60 + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 60 + $per; $i < 60 + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 60 + $per + $per; $i < 60 + $per + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="tab-pane fade unauth-job-list" id="category-4" role="tabpanel"
-                            aria-labelledby="category-4-nav" data-an-category="seoTabContent-Top Clients">
-                            @if (count($categories) > 90)
-                                <div class="row">
-                                    @php
-                                        $total = count($categories);
-                                        $newTotal = $total - 90;
-
-                                        if ($newTotal > 90) {
-                                            $per = 10;
-                                        } else {
-                                            $per = round($newTotal / 3);
-                                        }
-                                    @endphp
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-
-                                                @for ($i = 90; $i < 90 + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 90 + $per; $i < 90 + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        @if ($categories->count())
-                                            <ul class="list-unstyled footer-links-homepage">
-                                                @for ($i = 90 + $per + $per; $i < 90 + $per + $per + $per; $i++)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
-                                                            {{ $categories[$i]->category_name }}
-                                                            <span
-                                                                class="text-muted">({{ $categories[$i]->job_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                @endfor
-                                            </ul>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="tab-pane fade unauth-job-list" id="top-city-state" role="tabpanel"
-                            aria-labelledby="top-city-state-nav" data-an-category="seoTabContent-Top Clients">
                             <div class="row">
                                 @php
-                                    $total = count($total_state_job);
+                                $total = count($categories);
+                                $newTotal = $total - 30;
+
+                                if ($newTotal > 30) {
+                                $per = 10;
+                                } else {
+                                $per = round($newTotal / 3);
+                                }
+                                @endphp
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+
+                                        @for ($i = 30; $i < 30 + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 30 + $per; $i < 30 + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 30 + $per + $per; $i < 30 + $per + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="tab-pane fade unauth-job-list" id="category-3" role="tabpanel" aria-labelledby="category-3-nav" data-an-category="seoTabContent-Top Clients">
+                            @if (count($categories) > 60)
+                            <div class="row">
+                                @php
+                                $total = count($categories);
+                                $newTotal = $total - 60;
+
+                                if ($newTotal > 60) {
+                                $per = 10;
+                                } else {
+                                $per = round($newTotal / 3);
+                                }
+                                @endphp
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+
+                                        @for ($i = 60; $i < 60 + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 60 + $per; $i < 60 + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 60 + $per + $per; $i < 60 + $per + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="tab-pane fade unauth-job-list" id="category-4" role="tabpanel" aria-labelledby="category-4-nav" data-an-category="seoTabContent-Top Clients">
+                            @if (count($categories) > 90)
+                            <div class="row">
+                                @php
+                                $total = count($categories);
+                                $newTotal = $total - 90;
+
+                                if ($newTotal > 90) {
+                                $per = 10;
+                                } else {
+                                $per = round($newTotal / 3);
+                                }
+                                @endphp
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+
+                                        @for ($i = 90; $i < 90 + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 90 + $per; $i < 90 + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    @if ($categories->count())
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 90 + $per + $per; $i < 90 + $per + $per + $per; $i++) <li>
+                                            <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                {{ $categories[$i]->category_name }}
+                                                <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                            </a>
+                                            </li>
+                                            @endfor
+                                    </ul>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="tab-pane fade unauth-job-list" id="top-city-state" role="tabpanel" aria-labelledby="top-city-state-nav" data-an-category="seoTabContent-Top Clients">
+                            <div class="row">
+                                @php
+                                $total = count($total_state_job);
                                 @endphp
                                 <div class="col-lg-4 col-md-6">
                                     <div class="footer-logo-wrap mt-2">
                                         <h4 class="mb-3">Jobs by States</h4>
                                     </div>
                                     @if (count($total_state_job))
-                                        <ul class="list-unstyled footer-links-homepage">
-                                            @for ($i = 0; $i < $total; $i++)
-                                                <li>
-                                                    <a href="{{ route('jobs_by_state_or_city', $total_state_job[$i]->state_name) }}"
-                                                        id="jobapplytxt">
-                                                        {{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_state_job[$i]->state_name) }}
-                                                        <span
-                                                            class="text-muted">({{ $total_state_job[$i]->numberOfSales }})</span>
-                                                    </a>
-                                                </li>
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @for ($i = 0; $i < $total; $i++) <li>
+                                            <a href="{{ route('jobs_by_state_or_city', $total_state_job[$i]->state_name) }}" id="jobapplytxt">
+                                                {{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_state_job[$i]->state_name) }}
+                                                <span class="text-muted">({{ $total_state_job[$i]->numberOfSales }})</span>
+                                            </a>
+                                            </li>
                                             @endfor
-                                        </ul>
+                                    </ul>
                                     @endif
                                 </div>
 
@@ -592,18 +521,16 @@
                                         <h4 class="mb-3">Jobs by City</h4>
                                     </div>
                                     @if (count($total_city_jobe))
-                                        <ul class="list-unstyled footer-links-homepage">
-                                            @foreach ($total_city_jobe as $t_city)
-                                                <li>
-                                                    <a href="{{ route('jobs_by_state_or_city', str_replace(' ', ' ', $t_city->city_name)) }}"
-                                                        id="jobapplytxt">
-                                                        {{ preg_replace('/[0-9\@\#\.\;]+/', '', $t_city->city_name) }}
-                                                        <span
-                                                            class="text-muted">({{ $t_city->numberOfcities }})</span>
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <ul class="list-unstyled footer-links-homepage">
+                                        @foreach ($total_city_jobe as $t_city)
+                                        <li>
+                                            <a href="{{ route('jobs_by_state_or_city', str_replace(' ', ' ', $t_city->city_name)) }}" id="jobapplytxt">
+                                                {{ preg_replace('/[0-9\@\#\.\;]+/', '', $t_city->city_name) }}
+                                                <span class="text-muted">({{ $t_city->numberOfcities }})</span>
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                     @endif
                                 </div>
                             </div>
@@ -646,10 +573,10 @@
                             $show_in_footer_menu = config('footer_menu_pages');
                             ?>
                             @if ($show_in_footer_menu->count() > 0)
-                                @foreach ($show_in_footer_menu as $page)
-                                    <li><a href="{{ route('single_page', $page->slug) }}">{{ $page->title }}
-                                        </a></li>
-                                @endforeach
+                            @foreach ($show_in_footer_menu as $page)
+                            <li><a href="{{ route('single_page', $page->slug) }}">{{ $page->title }}
+                                </a></li>
+                            @endforeach
                             @endif
                             <li><a href="{{ route('contact_us') }}">@lang('app.contact_us')</a> </li>
                             <li><a href="{{ route('help_view') }}">@lang('app.help')</a> </li>
@@ -660,30 +587,19 @@
                     <div class="text-center my-4">
                         <ul class="list-unstyled mb-0 mediaLinks">
                             <li>
-                                <button onclick="location.href='https://www.facebook.com/pingjobsearch/';"
-                                    type="button" class="btn btn-social-icon btn-outline-facebook"><i
-                                        class="fab fa-facebook"></i></button>
+                                <button onclick="location.href='https://www.facebook.com/pingjobsearch/';" type="button" class="btn btn-social-icon btn-outline-facebook"><i class="fab fa-facebook"></i></button>
                             </li>
                             <li>
-                                <button onclick="location.href='https://www.instagram.com/pingjobsearch/';"
-                                    type="button" class="btn btn-social-icon btn-outline-instagram"><i
-                                        class="fab fa-instagram"></i></button>
+                                <button onclick="location.href='https://www.instagram.com/pingjobsearch/';" type="button" class="btn btn-social-icon btn-outline-instagram"><i class="fab fa-instagram"></i></button>
                             </li>
                             <li>
-                                <button onclick="location.href='https://twitter.com/pingjobsearch';" type="button"
-                                    class="btn btn-social-icon btn-outline-twitter"><i
-                                        class="fab fa-twitter"></i></button>
+                                <button onclick="location.href='https://twitter.com/pingjobsearch';" type="button" class="btn btn-social-icon btn-outline-twitter"><i class="fab fa-twitter"></i></button>
                             </li>
                             <li>
-                                <button onclick="location.href='https://www.linkedin.com/company/ping-job';"
-                                    type="button" class="btn btn-social-icon btn-outline-linkedin"><i
-                                        class="fab fa-linkedin"></i></button>
+                                <button onclick="location.href='https://www.linkedin.com/company/ping-job';" type="button" class="btn btn-social-icon btn-outline-linkedin"><i class="fab fa-linkedin"></i></button>
                             </li>
                             <li>
-                                <a href="https://wa.me/+15109361066" target="_blank" type="button"
-                                    class="btn btn-social-icon btn-outline-success"
-                                    style='justify-content: center;display: flex;align-items: center;border-width: 0;'><i
-                                        class="fab fa-whatsapp"></i></a>
+                                <a href="https://wa.me/+15109361066" target="_blank" type="button" class="btn btn-social-icon btn-outline-success" style='justify-content: center;display: flex;align-items: center;border-width: 0;'><i class="fab fa-whatsapp"></i></a>
                             </li>
                         </ul>
 
@@ -694,30 +610,25 @@
 
                         <!-- Authentication Links -->
                         @auth
-                            @if (Auth::user()->is_admin())
-                                <li class="nav-item postjob-button">
-                                    <a class="btn btn-outline-success text-white"
-                                        href="{{ route('client_add_view') }}">{{ __('app.register_client') }} </a>
-                                </li>
-                            @else
-                                <li class="nav-item postjob-button">
-                                    <a class="btn btn-outline-success text-white"
-                                        href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
-                                </li>
-                            @endif
+                        @if (Auth::user()->is_admin())
+                        <li class="nav-item postjob-button">
+                            <a class="btn btn-outline-success text-white" href="{{ route('client_add_view') }}">{{ __('app.register_client') }} </a>
+                        </li>
                         @else
-                            <li class="nav-item postjob-button">
-                                <a class="btn btn-outline-success text-white"
-                                    href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
-                            </li>
-                            <li class="nav-item postjob-button">
-                                <a class="btn btn-outline-primary text-white" href="https://social.pingjob.com/"
-                                    target="_blank">{{ __('app.social_login') }}</a>
-                            </li>
+                        <li class="nav-item postjob-button">
+                            <a class="btn btn-outline-success text-white" href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                        </li>
+                        @endif
+                        @else
+                        <li class="nav-item postjob-button">
+                            <a class="btn btn-outline-success text-white" href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                        </li>
+                        <li class="nav-item postjob-button">
+                            <a class="btn btn-outline-primary text-white" href="https://social.pingjob.com/" target="_blank">{{ __('app.social_login') }}</a>
+                        </li>
                         @endauth
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-success text-white"
-                                href="https://www.pingjob.com/pricing">{{ __('app.price') }} </a>
+                            <a class="btn btn-outline-success text-white" href="https://www.pingjob.com/pricing">{{ __('app.price') }} </a>
                         </li>
                     </ul>
                 </div>
@@ -733,8 +644,7 @@
     <div class="modal fade" id="applyJobModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('apply_job') }}" method="post" id="applyJob"
-                    enctype="multipart/form-data">
+                <form action="{{ route('apply_job') }}" method="post" id="applyJob" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">@lang('app.online_job_application_form')</h5>
@@ -744,54 +654,38 @@
                     </div>
                     <div class="modal-body">
                         @if (session('error'))
-                            <div class="alert alert-warning">{{ session('error') }}</div>
+                        <div class="alert alert-warning">{{ session('error') }}</div>
                         @endif
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label for="name" class="control-label">@lang('app.name'):</label>
-                            <input required type="text"
-                                class="form-control {{ e_form_invalid_class('name', $errors) }}" id="name"
-                                name="name"
-                                value="@if (Auth::check()) {{ $name = Auth::user()->name }} @else {{ old('name') }} @endif"
-                                placeholder="@lang('app.your_name')">
+                            <input required type="text" class="form-control {{ e_form_invalid_class('name', $errors) }}" id="name" name="name" value="@if (Auth::check()) {{ $name = Auth::user()->name }} @else {{ old('name') }} @endif" placeholder="@lang('app.your_name')">
                             {!! e_form_error('name', $errors) !!}
                         </div>
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label for="email" class="control-label">@lang('app.email'):</label>
-                            <input required type="text"
-                                class="form-control {{ e_form_invalid_class('email', $errors) }}" id="email"
-                                name="email"
-                                value="@if (Auth::check()) {{ $email = Auth::user()->email }} @else {{ old('email') }} @endif"
-                                placeholder="@lang('app.email_ie')">
+                            <input required type="text" class="form-control {{ e_form_invalid_class('email', $errors) }}" id="email" name="email" value="@if (Auth::check()) {{ $email = Auth::user()->email }} @else {{ old('email') }} @endif" placeholder="@lang('app.email_ie')">
                             {!! e_form_error('email', $errors) !!}
                         </div>
                         <div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
                             <label for="phone_number" class="control-label">@lang('app.phone_number'):</label>
-                            <input required type="text"
-                                class="form-control {{ e_form_invalid_class('phone_number', $errors) }}"
-                                id="phone_number" name="phone_number"
-                                value="@if (Auth::check()) {{ $phone = Auth::user()->phone }} @else {{ old('phone_number') }} @endif"
-                                placeholder="@lang('app.phone_number')">
+                            <input required type="text" class="form-control {{ e_form_invalid_class('phone_number', $errors) }}" id="phone_number" name="phone_number" value="@if (Auth::check()) {{ $phone = Auth::user()->phone }} @else {{ old('phone_number') }} @endif" placeholder="@lang('app.phone_number')">
                             {!! e_form_error('phone_number', $errors) !!}
                         </div>
                         <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
                             <label for="message-text" class="control-label">@lang('app.message'):</label>
-                            <textarea required class="form-control {{ e_form_invalid_class('message', $errors) }}" id="message" name="message"
-                                placeholder="@lang('app.your_message')">{{ old('message') }}</textarea>
+                            <textarea required class="form-control {{ e_form_invalid_class('message', $errors) }}" id="message" name="message" placeholder="@lang('app.your_message')">{{ old('message') }}</textarea>
                             {!! e_form_error('message', $errors) !!}
                         </div>
                         <div class="form-group {{ $errors->has('resume') ? 'has-error' : '' }}">
                             <label for="resume" class="control-label">@lang('app.resume'):</label>
-                            <input required type="file"
-                                class="form-control {{ e_form_invalid_class('resume', $errors) }}" id="resume"
-                                name="resume">
+                            <input required type="file" class="form-control {{ e_form_invalid_class('resume', $errors) }}" id="resume" name="resume">
                             <p class="text-muted">@lang('app.resume_file_types')</p>
                             {!! e_form_error('resume', $errors) !!}
                         </div>
                         <input type="hidden" name="job_id" id="job_id" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal">@lang('app.close')</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('app.close')</button>
                         <button type="submit" class="btn btn-primary" id="report_ad">@lang('app.apply_online')</button>
                     </div>
                 </form>
@@ -801,15 +695,15 @@
     <!-- apply job modal end -->
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var page_data = {!! pageJsonData() !!};
+        var page_data = {
+            !!pageJsonData() !!
+        };
         /* ]]> */
     </script>
     {{-- footer script --}}
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script type="text/javascript" language="javascript"
-        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" language="javascript"
-        src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript">
         $(".radio_val").click(function() {
 

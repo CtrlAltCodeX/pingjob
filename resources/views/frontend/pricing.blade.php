@@ -1,5 +1,30 @@
 @extends('layouts.theme')
 
+@push('css')
+<style>
+    .package {
+        box-shadow: 0px 0px 5px #ccc;
+        background-color: white;
+        border: none;
+        border-radius: 10px !important;
+    }
+
+    .pricing-table-wrap {
+        box-shadow: 0px 0px 5px #ccc;
+        padding: 2.5rem;
+        border-radius: 1rem
+    }
+
+    .package-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+        grid-gap: 30px;
+    }
+</style>
+@endpush
+
 @section('content')
 
 <style>
@@ -25,7 +50,6 @@
     }
 </style>
 
-
 <div class="pricing-section bg-white pb-5 pt-5">
     <div class="container">
         <div class="row">
@@ -39,66 +63,117 @@
             </div>
         </div>
 
-        <div class="row" style="display: grid;grid-template-columns:repeat(3, minmax(0, 1fr));margin-top: 2.5rem;margin-bottom: 2.5rem;">
+        <div class="row package-container">
 
-            @foreach($packages as $key => $key => $package)
-            <div class="col-md-12 m-auto ">
-                <div class="pricing-table-wrap bg-light pt-5 pb-5 text-center" style="box-shadow:0px 0px 5px #ccc;padding: 2.5rem;border-radius: 1rem;">
-                    <h1 class="display-4">{!! get_amount($package->price) !!}</h1>
-                    <h3>{{$package->package_name}}</h3>
-                    <div class="pricing-package-ribbon pricing-package-ribbon-green">Premium</div>
+            @foreach($packages as $key => $package)
+            @if($key == 1 )
+            <div style="margin-top: -20px;">
+                @else
+                <div>
+                    @endif
+                    <div class="pricing-table-wrap bg-light pt-5 pb-5 text-center">
+                        <h1 class="display-4">{!! get_amount($package->price) !!}</h1>
+                        <h3>{{$package->package_name}}</h3>
 
-                    <p class="mb-2 text-muted"> {{$package->premium_job}} Jobs Post</p>
+                        @if($key == 0)
+                        <div class="pricing-package-ribbon pricing-package-ribbon-green">
+                            Job Seeker
+                        </div>
+                        <div style="display: grid;grid-gap:5px;">
+                            <!-- <p class="mb-2 text-muted">{{$package->premium_job}} Jobs Post</p> -->
+                            <p class="mb-2 text-muted">Lifetime Access</p>
+                            <p class="mb-2 text-muted">Manage Multiple Resumes</p>
+                            <p class="mb-2 text-muted">Single User</p>
+                            <p class="mb-2 text-muted">Dashboard for applied Jobs</p>
+                            <p class="mb-2 text-muted">Social Google/Facebook Login</p>
+                            <p class="mb-2 text-muted">Daily email</p>
+                            <p class="mb-2 text-muted">Social App for direct client interaction</p>
+                            <p class="mb-2 text-muted">Automatic Assignment to Jobs</p>
+                            <a class="btn btn-success mt-4 package" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
+                                <i class="la la-shopping-cart"></i> Sign for free</a>
+                        </div>
+                        @endif
 
-                    <p class="mb-2 text-muted"> Unlimited Applicants</p>
-                    <p class="mb-2 text-muted"> Dashboard access to manage application</p>
-                    <p class="mb-2 text-muted"> E-Mail support available</p>
-                    <a class="btn btn-success mt-4 package" data-toggle="modal" data-target="#myModal{{$key}}" id='{{$package->id}}' style="box-shadow: 0px 0px 5px #ccc;background-color: white;border: none;border-radius: 10px !important;"> <i class="la la-shopping-cart" ></i> Purchase Package</a>
-                </div>
-
-                <div id="myModal{{$key}}" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body" id='body{{$package->id}}'>
-                                <div id='loader{{$package->id}}' class="text-center"></div>
-
-                            </div>
-                            <!-- <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div> -->
+                        @if($key == 1)
+                        <div class="pricing-package-ribbon pricing-package-ribbon-green">
+                            Employer
                         </div>
 
+                        <div style="display: grid;grid-gap:15px;">
+                            <p class="mb-2 text-muted">Access Resumes with Score</p>
+                            <p class="mb-2 text-muted">10 Jobs Post</p>
+                            <p class="mb-2 text-muted">Instant Display of Candidates with score (NLP feature)</p>
+                            <p class="mb-2 text-muted">Dashboard Management</p>
+                            <p class="mb-2 text-muted">Social Google/Facebook Login</p>
+                            <p class="mb-2 text-muted">Social App for direct interaction</p>
+                            <p class="mb-2 text-muted">No subscription, cancel anytime</p>
+                            <a class="btn btn-success mt-4 package" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
+                                <i class="la la-shopping-cart"></i> Go Pro</a>
+                        </div>
+                        @endif
+
+                        @if($key == 2)
+                        <div class="pricing-package-ribbon pricing-package-ribbon-green">
+                            Employer
+                        </div>
+                        <div style="display: grid;">
+                            <p class="mb-2 text-muted">Unlimited Access Resumes with Score</p>
+                            <p class="mb-2 text-muted">Unlimited Jobs Post</p>
+                            <p class="mb-2 text-muted">Single User</p>
+                            <p class="mb-2 text-muted">Instant Display of Candidates with score (NLP feature)</p>
+                            <p class="mb-2 text-muted">Dashboard Management</p>
+                            <p class="mb-2 text-muted">Social Google/Facebook Login</p>
+                            <p class="mb-2 text-muted">Social App for direct interaction</p>
+                            <p class="mb-2 text-muted">E-Mail support.</p>
+                            <p class="mb-2 text-muted">No subscription, cancel anytime</p>
+                            <a class="btn btn-success mt-4 package" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
+                                <i class="la la-shopping-cart"></i> Go to Business</a>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div id="myModal{{$key}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="body{{$package->id}}">
+                                    <div id="loader{{$package->id}}" class="text-center"></div>
+                                </div>
+                                <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+
         </div>
-
     </div>
-</div>
-@endsection
+    @endsection
 
-@push('js')
-<script>
-    $(document).ready(function() {
-        $(".package").click(function() {
-            var id = $(this).attr("id");
-            $.ajax({
-                type: 'GET',
-                url: "/checkout/" + id,
-                beforeSend: function() {
-                    $("#loader" + id).html('<div class="loader" ></div>');
-                },
-                success: function(data) {
-                    $("#body" + id).html(data);
-                }
-            });
+    @push('js')
+    <script>
+        $(document).ready(function() {
+            $(".package").click(function() {
+                var id = $(this).attr("id");
+                $.ajax({
+                    type: 'GET',
+                    url: "/checkout/" + id,
+                    beforeSend: function() {
+                        $("#loader" + id).html('<div class="loader" ></div>');
+                    },
+                    success: function(data) {
+                        $("#body" + id).html(data);
+                    }
+                });
+            })
         })
-    })
-</script>
-@endpush
+    </script>
+    @endpush

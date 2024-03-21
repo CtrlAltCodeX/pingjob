@@ -6,14 +6,17 @@ use App\Helper\Functions;
 @push('css')
 <style>
     .input {
-        height: 45px;
         border-radius: 15px;
         box-shadow: 0px 0px 15px #eee;
         border: none;
     }
 
-    .input::placeholder {
-        font-size: 13px;
+    .input input {
+        border-radius: 10px;
+    }
+
+    .input input::placeholder {
+        font-size: 16px;
     }
 </style>
 @endpush
@@ -75,51 +78,6 @@ use App\Helper\Functions;
                                     {{ $premium_jobs->links() }}
                                 </div>
                             </div>
-                            <!-- <table class="table newestJobs" style="border: 1px solid #DDD;">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Title</th>
-                                        <th colspan="2">Client</th>
-                                        <th>Vendor</th>
-                                        <th>Resumes </th>
-                                        <th>Location </th>
-                                        <th>Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="mypost">
-                                    @foreach ($premium_jobs as $job)
-                                    <tr>
-                                        <td>
-                                            {{ date('M-d', strtotime($job->created_at)) }}
-                                        </td>
-                                        <td>
-                                            <a class="text-dark" href="{{ route('job_view', $job->job_slug) }}">{!! $job->job_title !!}</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('clients_details', $job->user_id) }}">
-                                                <img src="{{ $job->logo ? asset('storage/uploads/images/logos/' . $job->logo) : asset('assets/images/company.png') }}" style="display: inline-block; width:50px;">
-                                            </a>
-                                        </td>
-                                        <td> <a class="text-dark" href="{{ route('clients_details', $job->user_id) }}">
-                                                <b>
-                                                    {!! $job->company !!}</b></a>
-                                        </td>
-                                        <td>{{ $job->vendor_count }}</td>
-                                        <td>{!! $job->job_applications_count !!}</td>
-                                        <td>
-                                            @if ($job->city_name)
-                                            {!! $job->city_name !!},
-                                            @endif
-                                            @if ($job->state_name)
-                                            {!! $job->state_name !!}
-                                            @endif
-                                        </td>
-                                        <td class="py-2"><button class="btn btn-success btn-sm" data-toggle="modal" data-jobid=' {!! $job->id !!}' data-target="#applyJobModal">Apply</button></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table> -->
                         </div>
 
                     </div>
@@ -154,19 +112,19 @@ use App\Helper\Functions;
                                 <label class="form-check-label" for="customRadio2">CLIENT</label>
                             </div>
                         </div>
-                        <div class="input-group mb-3 mt-4">
-                            <input type="text" class="form-control input" name="q" placeholder="@lang('app.job_title_placeholder')">
+                        <div class="input-group mb-3 mt-4 input">
+                            <input type="text" class="form-control" name="q" placeholder="@lang('app.job_title_placeholder')">
+                            <input type="text" class="form-control" name="location" placeholder="@lang('app.job_location_placeholder')">
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="submit" style="border-radius: 10px;"> @lang('app.search')</button>
                             </div>
                         </div>
 
-                        <div class="input-group mb-3 mt-4">
-                            <input type="text" class="form-control input" name="location" placeholder="@lang('app.job_location_placeholder')">
+                        <!-- <div class="input-group mb-3 mt-4">
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="submit" style="border-radius: 10px;"> @lang('app.search')</button>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                     <p class="m-3 search-alphabets">
                         <b class="alpha-bit"><a href="<?php echo 'clients_alphabetic?search_category=client&q=@'; ?>" class="alpha-bit-href">@</a></b>

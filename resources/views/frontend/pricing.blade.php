@@ -22,6 +22,11 @@
         margin-bottom: 2.5rem;
         grid-gap: 30px;
     }
+
+    .free-package {
+        background-color: #38c172 !important;
+        color: white;
+    }
 </style>
 @endpush
 
@@ -71,7 +76,7 @@
                 @else
                 <div>
                     @endif
-                    <div class="pricing-table-wrap bg-light pt-5 pb-5 text-center">
+                    <div class="pricing-table-wrap bg-light pt-5 pb-5 text-center @if($key == 0) free-package @endif">
                         <h1 class="display-4">{!! get_amount($package->price) !!}</h1>
                         <h3>{{$package->package_name}}</h3>
 
@@ -81,15 +86,15 @@
                         </div>
                         <div style="display: grid;grid-gap:5px;">
                             <!-- <p class="mb-2 text-muted">{{$package->premium_job}} Jobs Post</p> -->
-                            <p class="mb-2 text-muted">Lifetime Access</p>
-                            <p class="mb-2 text-muted">Manage Multiple Resumes</p>
-                            <p class="mb-2 text-muted">Single User</p>
-                            <p class="mb-2 text-muted">Dashboard for applied Jobs</p>
-                            <p class="mb-2 text-muted">Social Google/Facebook Login</p>
-                            <p class="mb-2 text-muted">Daily email</p>
-                            <p class="mb-2 text-muted">Social App for direct client interaction</p>
-                            <p class="mb-2 text-muted">Automatic Assignment to Jobs</p>
-                            <a class="btn btn-success mt-4 package" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
+                            <p class="mb-2">Lifetime Access</p>
+                            <p class="mb-2">Manage Multiple Resumes</p>
+                            <p class="mb-2">Single User</p>
+                            <p class="mb-2">Dashboard for applied Jobs</p>
+                            <p class="mb-2">Social Google/Facebook Login</p>
+                            <p class="mb-2">Daily email</p>
+                            <p class="mb-2">Social App for direct client interaction</p>
+                            <p class="mb-2">Automatic Assignment to Jobs</p>
+                            <a class="btn btn-success mt-4 package" style="color: #38c172;" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
                                 <i class="la la-shopping-cart"></i> Sign for free</a>
                         </div>
                         @endif

@@ -161,24 +161,25 @@
 
         </div>
     </div>
-    @endsection
+</div>
+@endsection
 
-    @push('js')
-    <script>
-        $(document).ready(function() {
-            $(".package").click(function() {
-                var id = $(this).attr("id");
-                $.ajax({
-                    type: 'GET',
-                    url: "/checkout/" + id,
-                    beforeSend: function() {
-                        $("#loader" + id).html('<div class="loader" ></div>');
-                    },
-                    success: function(data) {
-                        $("#body" + id).html(data);
-                    }
-                });
-            })
+@push('js')
+<script>
+    $(document).ready(function() {
+        $(".package").click(function() {
+            var id = $(this).attr("id");
+            $.ajax({
+                type: 'GET',
+                url: "/checkout/" + id,
+                beforeSend: function() {
+                    $("#loader" + id).html('<div class="loader" ></div>');
+                },
+                success: function(data) {
+                    $("#body" + id).html(data);
+                }
+            });
         })
-    </script>
-    @endpush
+    })
+</script>
+@endpush

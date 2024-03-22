@@ -24,7 +24,6 @@ use App\Helper\Functions;
         gtag('config', 'UA-146678787-1');
     </script>
 
-
     <script>
         window.fbAsyncInit = function() {
             FB.init({
@@ -174,8 +173,8 @@ use App\Helper\Functions;
 
 <body style="margin:0px;padding:0px;">
     {{-- top nav --}}
-    <section id="top-nav" class="mainTopHeader">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel {{ request()->routeIs('home') ? 'transparent-navbar' : '' }}">
+    <section id="top-nav" class="mainTopHeader" style="box-shadow: none;background: none;">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel {{ request()->routeIs('home') ? 'transparent-navbar' : '' }}" style='box-shadow: none;background: none;'>
             <div class="headerContent">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <h2>
@@ -612,23 +611,23 @@ use App\Helper\Functions;
                         @auth
                         @if (Auth::user()->is_admin())
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-success text-white" href="{{ route('client_add_view') }}">{{ __('app.register_client') }} </a>
+                            <a class="btn btn-outline-success " href="{{ route('client_add_view') }}">{{ __('app.register_client') }} </a>
                         </li>
                         @else
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-success text-white" href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                            <a class="btn btn-outline-success " href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
                         </li>
                         @endif
                         @else
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-success text-white" href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                            <a class="btn btn-outline-success " href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
                         </li>
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-primary text-white" href="https://social.pingjob.com/" target="_blank">{{ __('app.social_login') }}</a>
+                            <a class="btn btn-outline-primary " href="https://social.pingjob.com/" target="_blank">{{ __('app.social_login') }}</a>
                         </li>
                         @endauth
                         <li class="nav-item postjob-button">
-                            <a class="btn btn-outline-success text-white" href="https://www.pingjob.com/pricing">{{ __('app.price') }} </a>
+                            <a class="btn btn-outline-success " href="https://www.pingjob.com/pricing">{{ __('app.price') }} </a>
                         </li>
                     </ul>
                 </div>

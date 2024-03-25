@@ -198,13 +198,13 @@ use App\Helper\Functions;
                     </li>
                     <!-- Authentication Links -->
                     @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}"><i class="la la-sign-in"></i>
-                            {{ __('app.login') }}</a>
+                    <li class="nav-item" style='width:max-content;'>
+							<a class="nav-link" href="https://social.pingjob.com/welcome"><i class="la la-sign-in"></i>
+                            {{ 'Social Login' }}</a>
                     </li>
                     <li class="nav-item">
                         @if (Route::has('new_register'))
-                        <a class="nav-link" href="{{ route('new_register') }}"><i class="la la-user-plus"></i>
+                        <a class="nav-link" href="/pricing"><i class="la la-user-plus"></i>
                             {{ __('app.register') }}</a>
                         @endif
                     </li>
@@ -700,9 +700,11 @@ use App\Helper\Functions;
         /* ]]> */
     </script>
     {{-- footer script --}}
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/main.js') }}"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+ @stack('js')
     <script type="text/javascript">
         $(".radio_val").click(function() {
 

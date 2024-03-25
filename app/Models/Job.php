@@ -22,60 +22,71 @@ class Job extends Model
         'deadline',
     ];
 
-    public function employer(){
+    public function employer()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function application(){
+    public function application()
+    {
         return $this->hasMany(JobApplication::class);
     }
 
-    public function scopePending($query){
+    public function scopePending($query)
+    {
         return $query->where('status', '=', 0);
     }
-    public function scopeApproved($query){
+    public function scopeApproved($query)
+    {
         return $query->where('status', '=', 1);
     }
-    public function scopeActive($query){
+    public function scopeActive($query)
+    {
         return $query->where('status', '=', 1);
     }
-    public function scopeBlocked($query){
+    public function scopeBlocked($query)
+    {
         return $query->where('status', '=', 2);
     }
-    public function scopePremium($query){
+    public function scopePremium($query)
+    {
         return $query->whereIsPremium(1);
     }
 
-    public function nl2ulformat($string = null){
-        if ( ! $string){
+    public function nl2ulformat($string = null)
+    {
+        if (!$string) {
             return '';
         }
         $array = explode("\n", $string);
         $output = '';
-        if(is_array($array) && count($array)) {
+        if (is_array($array) && count($array)) {
             $output .= '<ul>';
-            foreach ($array as $item){
-                $output .= '<li class="mb-2">'.$item.'</li>';
+            foreach ($array as $item) {
+                $output .= '<li class="mb-2">' . $item . '</li>';
             }
             $output .= '</ul>';
         }
         return $output;
     }
 
-    public function is_active(){
+    public function is_active()
+    {
         return $this->status == 1;
     }
 
-    public function is_pending(){
+    public function is_pending()
+    {
         return $this->status == 0;
     }
 
-    public function can_edit(){
+    public function can_edit()
+    {
         $viewable = false;
 
-        if (Auth::check()){
+        if (Auth::check()) {
             $user = Auth::user();
-            if ( $user->is_admin() || $user->id == $this->user_id){
+            if ($user->is_admin() || $user->id == $this->user_id) {
                 $viewable = true;
             }
         }
@@ -83,33 +94,31 @@ class Job extends Model
         return $viewable;
     }
 
-    public function status_context(){
+    public function status_context()
+    {
         $status = $this->status;
         $html = '';
-        switch ($status){
+        switch ($status) {
             case 0:
-                $html = '<span class="text-muted">'.trans('app.pending').'</span>';
+                $html = '<span class="text-muted">' . trans('app.pending') . '</span>';
                 break;
             case 1:
-                $html = '<span class="text-success">'.trans('app.published').'</span>';
+                $html = '<span class="text-success">' . trans('app.published') . '</span>';
                 break;
             case 2:
-                $html = '<span class="text-warning">'.trans('app.blocked').'</span>';
+                $html = '<span class="text-warning">' . trans('app.blocked') . '</span>';
                 break;
         }
         return $html;
     }
 
-	 public function comments()
+    public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
-	public function user()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-
-
 }

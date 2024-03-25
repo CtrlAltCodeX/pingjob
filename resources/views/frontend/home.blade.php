@@ -40,33 +40,42 @@ use App\Helper\Functions;
                         <div style="width: 100%;">
                             <div class="row row justify-content-center">
                                 @foreach ($premium_jobs as $job)
+                                @php
+                                $getState = \App\Models\State::find($job->state_id);
+                                @endphp
                                 <div class="col-md-10 mt-4" style="background-color: white;padding: 20px;box-shadow: 0px 0px 10px #eee;border-radius: 10px;">
                                     <div class='d-flex' style="grid-gap: 30px;">
                                         <div class="d-flex align-items-center">
-                                            <img src="http://127.0.0.1:8000/assets/images/logo.png" />
+                                            <img src="{{ $job->logo ? asset('storage/uploads/images/logos/' . $job->logo) : asset('assets/images/company.png') }}" width=100 />
                                         </div>
                                         <div class="d-flex flex-column w-100" style="font-size: 16px;">
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex justify-content-between">
-                                                    <a href="{{ route('clients_details', $job->user_id) }}" style='font-size:20px;'><b>{!! $job->company !!}</b></a>
+                                                    
+                                                        <a href="{{ route('job_view', $job->job_slug) }}" class='text-dark'>{!! $job->job_title !!}</a>
+                                                        <a href="{{ route('clients_details', $job->user_id) }}" style='font-size:20px;'><b>{!! $job->company !!}</b></a>
+
                                                     <div class="d-flex flex-column">
-                                                        <span>Vendor - {{ $job->vendor_count }}</span>
+                                                        <span class='bg-warning p-2'>{{ date('M-d', strtotime($job->created_at)) }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
                                                     <b>@if ($job->city_name)
                                                         {!! $job->city_name !!},
                                                         @endif
-                                                        @if ($job->state_name)
-                                                        {!! $job->state_name !!}
+                                                        @if ($getState->state_id)
+                                                        {{ $getState->state_id }}
                                                         @endif
                                                     </b>
-                                                    <span>Applicants - {!! $job->job_applications_count !!}</span>
+													<div class='d-flex align-items-end flex-column'>
+														<span>Vendor - {{ $job->vendor_count }}</span>
+														<span>Applicants - {!! $job->job_applications_count !!}</span>
+													</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-end">
                                                 <button class="btn btn-success mt-4 btn-sm" data-toggle="modal" data-jobid=' {!! $job->id !!}' data-target="#applyJobModal">Apply</button>
-                                                <span>{{ date('M-d', strtotime($job->created_at)) }}</span>
+                                                <!-- <span>{{ date('M-d', strtotime($job->created_at)) }}</span> -->
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +142,7 @@ use App\Helper\Functions;
             </div>
             {{-- alphabatic search end --}}
             {{-- Top Client --}}
-            
+
             {{--
             <div class=" col-sm-6 col-md-6 col-lg-12 col-xs-12 market-overview-wrapper ">
                 <div class="card1 market-overview-wrapper my-2 " id="topCLientCard">
@@ -153,140 +162,140 @@ use App\Helper\Functions;
                                 @foreach ($top_clients as $top_client)
                                 <tr>
                                     <td><span class="table-text-dark">{{ Functions::str_limit($top_client->company, 15) }}</span>
-                                    </td>
-                                    <td><a id="jobapplytxt" style="text-decoration:none;color:#165c98;font-size: small;" target="_blank" href="{{ route('jobs_by_employer', $top_client->company_slug ?? 0) }}">{{ $top_client->job_count }}</a>
-                                    </td>
-                                    <td style="font-size: small;">{{ $top_client->vendor_count }}</td>
-                                    <td style="font-size: small;">
-                                        {{ $top_client->applications_count }}
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                        <h2 class="card-title mb-2">Top Vendors</h2>
-                        <table class="table table-responsive dataTable topVendor" id="example5">
-                            <thead>
-                                <tr>
-                                    <th>Vendors</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="">
-                                @foreach ($total_vendors_job as $total_vendors)
-                                <tr>
-                                    <td>{{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name) }}
-                                    </td>
-                                    <td>
-                                        <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
-                                            {!! $total_vendors->numberOfclient !!}</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            </td>
+            <td><a id="jobapplytxt" style="text-decoration:none;color:#165c98;font-size: small;" target="_blank" href="{{ route('jobs_by_employer', $top_client->company_slug ?? 0) }}">{{ $top_client->job_count }}</a>
+            </td>
+            <td style="font-size: small;">{{ $top_client->vendor_count }}</td>
+            <td style="font-size: small;">
+                {{ $top_client->applications_count }}
+            </td>
+            </tr>
+            @endforeach
+            @endif
+            </tbody>
+            </table>
+            <h2 class="card-title mb-2">Top Vendors</h2>
+            <table class="table table-responsive dataTable topVendor" id="example5">
+                <thead>
+                    <tr>
+                        <th>Vendors</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    @foreach ($total_vendors_job as $total_vendors)
+                    <tr>
+                        <td>{{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name) }}
+                        </td>
+                        <td>
+                            <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
+                                {!! $total_vendors->numberOfclient !!}</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 col-md-6 col-lg-12 col-xs-12 market-overview-wrapper ">
+    <div class="card1 market-overview top-vendors  my-3">
+        <div class="card-body1 plrtb-5">
+            <h2 class="card-title mb-2">Top Vendors</h2>
+            <table class="table table-responsive dataTable topVendor" id="example5">
+                <thead>
+                    <tr>
+                        <th>Vendors</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    @foreach ($total_vendors_job as $total_vendors)
+                    <tr>
+                        <td>{{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name) }}</td>
+                        <td>
+                            <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
+                                {!! $total_vendors->numberOfclient !!}</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+--}}
+<div class="market-overview plrtb-5 flex-grow-1 mb-3">
+    <div class="">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist" style="width:max-content;">
+                <a class="nav-item nav-link active" id="bj-top-clients-nav" data-toggle="tab" href="#bj-top-clients" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Clients" aria-controls="bj-top-clients" aria-selected="true">Top Clients
+                </a>
+                <a class="nav-item nav-link" id="bj-top-vendors-nav" data-toggle="tab" href="#bj-top-vendors" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="bj-top-vendors" aria-selected="false">Top Vendors
+                </a>
             </div>
-            
-            <div class="col-sm-6 col-md-6 col-lg-12 col-xs-12 market-overview-wrapper ">
-                <div class="card1 market-overview top-vendors  my-3">
-                    <div class="card-body1 plrtb-5">
-                        <h2 class="card-title mb-2">Top Vendors</h2>
-                        <table class="table table-responsive dataTable topVendor" id="example5">
-                            <thead>
-                                <tr>
-                                    <th>Vendors</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="">
-                                @foreach ($total_vendors_job as $total_vendors)
-                                <tr>
-                                    <td>{{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name) }}</td>
-                                    <td>
-                                        <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
-                                            {!! $total_vendors->numberOfclient !!}</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent" data-an-category="seoTabContent-Top Clients">
+            <div class="tab-pane fade unauth-job-list active show" id="bj-top-clients" role="tabpanel" aria-labelledby="bj-top-clients-nav" data-an-category="seoTabContent-Top Clients">
+                <table class="table table-responsive dataTable" id="top-clients">
+                    {{-- <table class="table table-responsive dataTable topClientTab" id="top-clients"> --}}
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Job</th>
+                            <th>Vendor</th>
+                            <th>Resume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($top_clients->isNotEmpty())
+                        @foreach ($top_clients as $top_client)
+                        <tr>
+                            <td style="white-space: nowrap;"><span class="table-text-dark">{{ Functions::str_limit($top_client->company, 10) }}</span>
+                            </td>
+                            <td><a id="jobapplytxt" style="text-decoration:none;color:#165c98;font-size: small;" target="_blank" href="{{ route('jobs_by_employer', $top_client->company_slug ?? 0) }}">{{ $top_client->job_count }}</a>
+                            </td>
+                            <td style="font-size: small;">
+                                {{ $top_client->vendor_count }}
+                            </td>
+                            <td style="font-size: small;">
+                                {{ $top_client->applications_count }}
+                            </td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </tbody>
+                </table>
             </div>
-            --}}
-            <div class="market-overview plrtb-5 flex-grow-1 mb-3">
-                <div class="">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist" style="width:max-content;">
-                            <a class="nav-item nav-link active" id="bj-top-clients-nav" data-toggle="tab" href="#bj-top-clients" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Clients" aria-controls="bj-top-clients" aria-selected="true">Top Clients
-                            </a>
-                            <a class="nav-item nav-link" id="bj-top-vendors-nav" data-toggle="tab" href="#bj-top-vendors" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="bj-top-vendors" aria-selected="false">Top Vendors
-                            </a>
-                        </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent" data-an-category="seoTabContent-Top Clients">
-                        <div class="tab-pane fade unauth-job-list active show" id="bj-top-clients" role="tabpanel" aria-labelledby="bj-top-clients-nav" data-an-category="seoTabContent-Top Clients">
-                            <table class="table table-responsive dataTable" id="top-clients">
-                                {{-- <table class="table table-responsive dataTable topClientTab" id="top-clients"> --}}
-                                <thead>
-                                    <tr>
-                                        <th>Client</th>
-                                        <th>Job</th>
-                                        <th>Vendor</th>
-                                        <th>Resume</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($top_clients->isNotEmpty())
-                                    @foreach ($top_clients as $top_client)
-                                    <tr>
-                                        <td style="white-space: nowrap;"><span class="table-text-dark">{{ Functions::str_limit($top_client->company, 10) }}</span>
-                                        </td>
-                                        <td><a id="jobapplytxt" style="text-decoration:none;color:#165c98;font-size: small;" target="_blank" href="{{ route('jobs_by_employer', $top_client->company_slug ?? 0) }}">{{ $top_client->job_count }}</a>
-                                        </td>
-                                        <td style="font-size: small;">
-                                            {{ $top_client->vendor_count }}
-                                        </td>
-                                        <td style="font-size: small;">
-                                            {{ $top_client->applications_count }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade unauth-job-list" id="bj-top-vendors" role="tabpanel" aria-labelledby="bj-top-vendors-nav" data-an-category="seoTabContent-Top Vendors">
-                            <table class="table table-responsive dataTable" id="top-vendors">
-                                {{-- <table class="table table-responsive dataTable topVendor" id="top-vendors"> --}}
-                                <thead>
-                                    <tr>
-                                        <th>Vendors</th>
-                                        <th style="text-align:right;">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($total_vendors_job as $total_vendors)
-                                    <tr>
-                                        <td style="white-space: nowrap;"><span class="table-text-dark">{{ Functions::str_limit(preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name), 12) }}</span>
-                                        </td>
-                                        <td style="font-size: small; text-align:right;">
-                                            <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
-                                                {!! $total_vendors->numberOfclient !!}</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="tab-pane fade unauth-job-list" id="bj-top-vendors" role="tabpanel" aria-labelledby="bj-top-vendors-nav" data-an-category="seoTabContent-Top Vendors">
+                <table class="table table-responsive dataTable" id="top-vendors">
+                    {{-- <table class="table table-responsive dataTable topVendor" id="top-vendors"> --}}
+                    <thead>
+                        <tr>
+                            <th>Vendors</th>
+                            <th style="text-align:right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($total_vendors_job as $total_vendors)
+                        <tr>
+                            <td style="white-space: nowrap;"><span class="table-text-dark">{{ Functions::str_limit(preg_replace('/[0-9\@\#\.\;]+/', '', $total_vendors->name), 12) }}</span>
+                            </td>
+                            <td style="font-size: small; text-align:right;">
+                                <a class="text-info" href="{{ route('topclients_details', $total_vendors->id) }}">
+                                    {!! $total_vendors->numberOfclient !!}</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 @push('css')
@@ -368,9 +377,6 @@ use App\Helper\Functions;
                                 <h3>{{$package->package_name}}</h3>
 
                                 @if($key == 0)
-                                <div class="pricing-package-ribbon pricing-package-ribbon-green">
-                                    Job Seeker
-                                </div>
                                 <div style="display: grid;grid-gap:5px;">
                                     <!-- <p class="mb-2 text-muted">{{$package->premium_job}} Jobs Post</p> -->
                                     <p class="mb-2">Lifetime Access</p>
@@ -381,15 +387,12 @@ use App\Helper\Functions;
                                     <p class="mb-2">Daily email</p>
                                     <p class="mb-2">Social App for direct client interaction</p>
                                     <p class="mb-2">Automatic Assignment to Jobs</p>
-                                    <a class="btn btn-success mt-4 package" style="color: #38c172;" data-toggle="modal" data-target="#myModal{{$key}}" id="{{$package->id}}">
+                                    <a class="btn btn-success mt-4 package" style="color: #38c172;" id="{{$package->id}}" href='{{ route("new_register") }}'>
                                         <i class="la la-shopping-cart"></i> Sign for free</a>
                                 </div>
                                 @endif
 
                                 @if($key == 1)
-                                <div class="pricing-package-ribbon pricing-package-ribbon-green">
-                                    Employer
-                                </div>
 
                                 <div style="display: grid;grid-gap:15px;">
                                     <p class="mb-2 text-muted">Access Resumes with Score</p>
@@ -405,9 +408,6 @@ use App\Helper\Functions;
                                 @endif
 
                                 @if($key == 2)
-                                <div class="pricing-package-ribbon pricing-package-ribbon-green">
-                                    Employer
-                                </div>
                                 <div style="display: grid;">
                                     <p class="mb-2 text-muted">Unlimited Access Resumes with Score</p>
                                     <p class="mb-2 text-muted">Unlimited Jobs Post</p>
@@ -462,6 +462,9 @@ use App\Helper\Functions;
                 url: "/checkout/" + id,
                 beforeSend: function() {
                     $("#loader" + id).html('<div class="loader" ></div>');
+                },
+				headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
                     $("#body" + id).html(data);

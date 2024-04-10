@@ -120,8 +120,6 @@ Route::post('get-states-options', [LocationController::class, 'getStatesOption']
 
 Route::post('get-city-options', [LocationController::class, 'getCityOption'])->name('get_city_option_by_state');
 
-
-
 Route::get('apply_job', function () {
     return redirect(route('home'));
 });
@@ -205,11 +203,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'dashboard'], function ()
     Route::post('resumes-repo/store', [ResumesRepoController::class, 'storeResume'])->name('store_to_resumes_repo');
     Route::get('resumes-repo/download/zip', [ResumesRepoController::class, 'downloadZip'])->name('download_repo_resumes_zip');
 
-
     Route::group(['middleware' => 'admin_agent_employer'], function () {
-
         Route::group(['prefix' => 'employer'], function () {
-
             Route::group(['prefix' => 'job'], function () {
                 Route::get('new', [JobController::class, 'newJob'])->name('post_new_job');
                 Route::post('new', [JobController::class, 'newJobPost']);
@@ -252,8 +247,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'dashboard'], function ()
             Route::get('applicants/{job_id}', [JobController::class, 'jobApplicants'])->name('job_applicants');
             Route::get('applicants/{job_id}/getDownload/{pdf_name}', [JobController::class, 'getDownload'])->name('getDownload');
         });
-
-
 
         Route::get('flagged', [JobController::class, 'flaggedMessage'])->name('flagged_jobs');
         Route::get('add-employer', [DashboardController::class, 'Add_new_employer'])->name('add-employer');

@@ -29,7 +29,7 @@ class JobController extends Controller
 {
     public function newJob()
     {
-        $title = __('app.post_new_job');
+        $title = __('app.posIt_new_job');
 
         $categories = Category::orderBy('category_name', 'asc')->get();
         $countries = Country::all();
@@ -53,8 +53,6 @@ class JobController extends Controller
     public function newJobPost(Request $request)
     {
         $user_id = Auth::user()->id;
-
-
 
         $rules = [
             'job_title' => ['required', 'string', 'max:190'],
@@ -491,6 +489,7 @@ class JobController extends Controller
         $review_ratings = !empty($review_ratings[0]->review_rating) ? $review_ratings[0]->review_rating  : 0;
 
         $title = $job->job_title;
+        
         return view('frontend.job-view', compact('title', 'job', 'review_ratings', 'review_count', 'company', 'vendors'));
     }
 

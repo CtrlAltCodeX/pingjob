@@ -373,9 +373,6 @@ class UserController extends Controller
 
         $title = __('app.resumes') . " For <strong>{$job->job_title}</strong>";
         $applications = JobApplication::whereJobId($job_id)->orderBy('id', 'desc')->paginate(10);
-        // $title = __('app.resumes');
-        // $employer_id = Auth::user()->id;
-        // $applications = JobApplication::whereEmployerId($employer_id)->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.applicants-resumes-by-job', compact('title', 'applications', 'job_id'));
     }

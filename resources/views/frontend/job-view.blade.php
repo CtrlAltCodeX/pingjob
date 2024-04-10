@@ -249,12 +249,8 @@
                                 ({{ $job->application->count() }})&nbsp;&nbsp;</a>
                         @endif
                         {{-- <a href="{{ route('employer_applicant_resumes_by_job_id', $job->id) }}"></a> --}}
-
                     </p>
-
-
                 </div>
-
 
                 <div class="col-md-4">
                     <div class="job-view-lead-position-box">

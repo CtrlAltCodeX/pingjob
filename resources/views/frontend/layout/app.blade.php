@@ -69,7 +69,6 @@ use App\Helper\Functions;
     </script>
     <!-- End Google Tag Manager -->
 
-
     <!-- Zoho Analytics -->
     <script src="https://cdn.pagesense.io/js/pingjobinc/129e50549beb4b799b6446daea4d8016.js"></script>
 
@@ -79,8 +78,6 @@ use App\Helper\Functions;
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
     </script>
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5309331350958816"
-        crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="./assets/css/style.min.css">
@@ -170,6 +167,12 @@ use App\Helper\Functions;
         }
     </style>
 </head>
+@php
+$categories = \App\Models\Category::orderBy('job_count', 'desc')
+->where('job_count', '>=', 1)->get();
+$total_state_job = DB::select("SELECT jobs.state_id,jobs.state_name, COUNT(*) AS numberOfSales FROM jobs JOIN states ON states.id = jobs.state_id GROUP BY jobs.state_id,jobs.state_name ORDER BY COUNT(*) DESC limit 15");
+$total_city_jobe = DB::select("SELECT jobs.city_id,jobs.city_name, COUNT(*) AS numberOfcities FROM jobs JOIN cities ON cities.id = jobs.city_id GROUP BY jobs.city_id,jobs.city_name ORDER BY COUNT(*) DESC limit 15");
+@endphp
 
 <body style="margin:0px;padding:0px;">
     {{-- top nav --}}
@@ -199,7 +202,7 @@ use App\Helper\Functions;
                     <!-- Authentication Links -->
                     @guest
                     <li class="nav-item" style='width:max-content;'>
-							<a class="nav-link" href="https://social.pingjob.com/welcome"><i class="la la-sign-in"></i>
+                        <a class="nav-link" href="https://social.pingjob.com/welcome"><i class="la la-sign-in"></i>
                             {{ 'Social Login' }}</a>
                     </li>
                     <li class="nav-item">
@@ -700,11 +703,11 @@ use App\Helper\Functions;
         /* ]]> */
     </script>
     {{-- footer script --}}
-<!-- <script src="{{ asset('assets/js/main.js') }}"></script> -->
+    <!-- <script src="{{ asset('assets/js/main.js') }}"></script> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
- @stack('js')
+    @stack('js')
     <script type="text/javascript">
         $(".radio_val").click(function() {
 

@@ -2,11 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EZXHTKL8RP"></script>
-
-
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -17,7 +14,6 @@
 
         gtag('config', 'G-EZXHTKL8RP');
     </script>
-
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -43,7 +39,10 @@
 
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -51,6 +50,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     @stack('css')
     @yield('assets')
 
@@ -89,7 +89,19 @@
     </script>
     <!-- End Google Tag Manager -->
 
+    <style>
+        .pj-footer{
+            width: inherit !important;
+        }
+    </style>
+
 </head>
+@php
+$categories = \App\Models\Category::orderBy('job_count', 'desc')
+->where('job_count', '>=', 1)->get();
+$total_state_job = DB::select("SELECT jobs.state_id,jobs.state_name, COUNT(*) AS numberOfSales FROM jobs JOIN states ON states.id = jobs.state_id GROUP BY jobs.state_id,jobs.state_name ORDER BY COUNT(*) DESC limit 15");
+$total_city_jobe = DB::select("SELECT jobs.city_id,jobs.city_name, COUNT(*) AS numberOfcities FROM jobs JOIN cities ON cities.id = jobs.city_id GROUP BY jobs.city_id,jobs.city_name ORDER BY COUNT(*) DESC limit 15");
+@endphp
 
 <body class="{{request()->routeIs('home') ? ' home ' : ''}} {{request()->routeIs('job_view') ? ' job-view-page ' : ''}}">
     <div id="app">
@@ -165,58 +177,301 @@
             @yield('content')
         </div>
 
-        <div id="main-footer" class="main-footer bg-dark py-5">
-
-            <div class="container">
+        {{-- footer --}}
+        <footer class="pj-footer">
+            <div id="main-footer" class="main-footer py-3 pb-5">
+                <nav style="overflow:hidden;">
+                    @php
+                    $total = count($categories);
+                    @endphp
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist" style="width:max-content;">
+                        <a class="nav-item nav-link active" id="category-1-nav" data-toggle="tab" href="#category-1" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-1" aria-selected="false">Categories
+                        </a>
+                        @if ($total > 30)
+                        <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-2" aria-selected="false">More
+                        </a>
+                        @endif
+                        @if ($total > 60)
+                        <a class="nav-item nav-link" id="category-2-nav" data-toggle="tab" href="#category-2" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-2" aria-selected="false">More
+                        </a>
+                        @endif
+                        @if ($total > 90)
+                        <a class="nav-item nav-link" id="category-4-nav" data-toggle="tab" href="#category-4" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Vendors" aria-controls="category-4" aria-selected="false">More
+                        </a>
+                        @endif
+                        <a class="nav-item nav-link" id="top-city-state-nav" data-toggle="tab" href="#top-city-state" role="tab" data-analytics-track="click" data-analytics-key="seoTabClick" data-analytics-set-group="click,#nav-tabContent,seoTabContent-Top Clients" aria-controls="top-city-state" aria-selected="true">State / City
+                        </a>
+                    </div>
+                </nav>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-9 col-md-6">
+                        <div class="tab-content mt-4" id="nav-tabContent" data-an-category="seoTabContent-Top Clients">
 
-                        <div class="footer-logo-wrap mt-2">
-                            <h4 class="mb-3">PingJob</h4>
+                            <div class="tab-pane fade unauth-job-list active show" id="category-1" role="tabpanel" aria-labelledby="category-1-nav" data-an-category="seoTabContent-Top Clients">
+                                <div class="row">
+                                    @php
+                                    $total = count($categories);
+                                    if ($total > 30) {
+                                    $per = round(30 / 3);
+                                    } else {
+                                    $per = round($total / 3);
+                                    }
+                                    @endphp
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 0; $i < $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = $per; $i < $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = $per + $per; $i < $per + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade unauth-job-list" id="category-2" role="tabpanel" aria-labelledby="category-2-nav" data-an-category="seoTabContent-Top Clients">
+                                @if (count($categories) > 30)
+                                <div class="row">
+                                    @php
+                                    $total = count($categories);
+                                    $newTotal = $total - 30;
 
-                        </div>
+                                    if ($newTotal > 30) {
+                                    $per = 10;
+                                    } else {
+                                    $per = round($newTotal / 3);
+                                    }
+                                    @endphp
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
 
-                        <div class="footer-menu-wrap">
-                            <ul class="list-unstyled">
-                                <?php
-                                $show_in_footer_menu = config('footer_menu_pages');
-                                ?>
-                                @if($show_in_footer_menu->count() > 0)
-                                @foreach($show_in_footer_menu as $page)
-                                <li><a href="{{ route('single_page', $page->slug) }}">{{ $page->title }} </a></li>
-                                @endforeach
+                                            @for ($i = 30; $i < 30 + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 30 + $per; $i < 30 + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 30 + $per + $per; $i < 30 + $per + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                </div>
                                 @endif
-                                <li><a href="{{route('contact_us')}}">@lang('app.contact_us')</a> </li>
-                                <li><a href="{{route('help_view')}}">@lang('app.help')</a> </li>
-                            </ul>
+                            </div>
+                            <div class="tab-pane fade unauth-job-list" id="category-3" role="tabpanel" aria-labelledby="category-3-nav" data-an-category="seoTabContent-Top Clients">
+                                @if (count($categories) > 60)
+                                <div class="row">
+                                    @php
+                                    $total = count($categories);
+                                    $newTotal = $total - 60;
 
+                                    if ($newTotal > 60) {
+                                    $per = 10;
+                                    } else {
+                                    $per = round($newTotal / 3);
+                                    }
+                                    @endphp
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+
+                                            @for ($i = 60; $i < 60 + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 60 + $per; $i < 60 + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 60 + $per + $per; $i < 60 + $per + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="tab-pane fade unauth-job-list" id="category-4" role="tabpanel" aria-labelledby="category-4-nav" data-an-category="seoTabContent-Top Clients">
+                                @if (count($categories) > 90)
+                                <div class="row">
+                                    @php
+                                    $total = count($categories);
+                                    $newTotal = $total - 90;
+
+                                    if ($newTotal > 90) {
+                                    $per = 10;
+                                    } else {
+                                    $per = round($newTotal / 3);
+                                    }
+                                    @endphp
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+
+                                            @for ($i = 90; $i < 90 + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 90 + $per; $i < 90 + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        @if ($categories->count())
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 90 + $per + $per; $i < 90 + $per + $per + $per; $i++) <li>
+                                                <a href="{{ route('jobs_listing', ['category' => $categories[$i]->id]) }}">
+                                                    {{ $categories[$i]->category_name }}
+                                                    <span class="text-muted">({{ $categories[$i]->job_count }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="tab-pane fade unauth-job-list" id="top-city-state" role="tabpanel" aria-labelledby="top-city-state-nav" data-an-category="seoTabContent-Top Clients">
+                                <div class="row">
+                                    @php
+                                    $total = count($total_state_job);
+                                    @endphp
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="footer-logo-wrap mt-2">
+                                            <h4 class="mb-3">Jobs by States</h4>
+                                        </div>
+                                        @if (count($total_state_job))
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @for ($i = 0; $i < $total; $i++) <li>
+                                                <a href="{{ route('jobs_by_state_or_city', $total_state_job[$i]->state_name) }}" id="jobapplytxt">
+                                                    {{ preg_replace('/[0-9\@\#\.\;]+/', '', $total_state_job[$i]->state_name) }}
+                                                    <span class="text-muted">({{ $total_state_job[$i]->numberOfSales }})</span>
+                                                </a>
+                                                </li>
+                                                @endfor
+                                        </ul>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="footer-logo-wrap mt-2">
+                                            <h4 class="mb-3">Jobs by City</h4>
+                                        </div>
+                                        @if (count($total_city_jobe))
+                                        <ul class="list-unstyled footer-links-homepage">
+                                            @foreach ($total_city_jobe as $t_city)
+                                            <li>
+                                                <a href="{{ route('jobs_by_state_or_city', str_replace(' ', ' ', $t_city->city_name)) }}" id="jobapplytxt">
+                                                    {{ preg_replace('/[0-9\@\#\.\;]+/', '', $t_city->city_name) }}
+                                                    <span class="text-muted">({{ $t_city->numberOfcities }})</span>
+                                                </a>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-
-
-
-
-                    <div class="col-md-4">
-
-
-
-                        <div class="footer-menu-wrap mt-2">
-                            <h4 class="mb-3">Follow Us </h4>
-                            <ul class="list-unstyled">
-                                <li><a href="https://www.Facebook.com/pingjob" target="_blank">Facebook</a></li>
-                                <li><a href="https://www.Twitter.com/pingjobsearch" target="_blank">Twitter</a></li>
-                                <li><a href="https://www.linkedin.com/company/ping-job" target="_blank">LinkedIn </a></li>
-                                <li><a href="https://www.instagram.com/pingjobsearch/" target="_blank">Instagram </a></li>
-                                <li><a href="https://wa.me/+5103999927" target="_blank">Whatsapp </a></li>
-                            </ul>
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-md-3">
-
+                    <div class="col-lg-3 col-md-6 mt-4">
+                        {{-- web stats --}}
                         <div class="footer-menu-wrap  mt-2">
                             <h4 class="mb-3">Website stats</h4>
                             <?php
@@ -228,37 +483,95 @@
                             $job_applications = config('job_applications');
                             ?>
                             <ul class="list-unstyled">
-                                <li style="color: #38c172;"><a>@lang('app.clients')({{ $clients->count() }})</a></li>
+                                <li style="color: #38c172;"><a>@lang('app.clients')({{ $clients->count() }})</a>
+                                </li>
                                 <li style="color: #38c172;">@lang('app.approve_vendor')({{ $vendors->count() }})</li>
                                 <li style="color: #38c172;">@lang('app.jobs')({{ $jobs->count() }})</li>
                                 <li style="color: #38c172;">@lang('app.approve_contacts')({{ $contacts->count() }})</li>
                                 <li style="color: #38c172;">@lang('app.approve_review')({{ 777 + $reviews->count() }})</li>
-                                <li style="color: #38c172;">@lang('app.resumes')({{ 3906 + $job_applications->count() }})</li>
+                                <li style="color: #38c172;">
+                                    @lang('app.resumes')({{ 3906 + $job_applications->count() }})</li>
                             </ul>
 
                         </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="footer-copyright-text-wrap text-center mt-4">
-                            <p>{!! get_text_tpl(get_option('copyright_text')) !!}</p>
+                        {{-- web stats --}}
+                        {{-- pages --}}
+                        <div class="footer-logo-wrap mt-2">
+                            <h4 class="mb-3">PingJob</h4>
                         </div>
+                        <div class="footer-menu-wrap">
+                            <ul class="list-unstyled footer-links-homepage">
+                                <?php
+                                $show_in_footer_menu = config('footer_menu_pages');
+                                ?>
+                                @if ($show_in_footer_menu->count() > 0)
+                                @foreach ($show_in_footer_menu as $page)
+                                <li><a href="{{ route('single_page', $page->slug) }}">{{ $page->title }}
+                                    </a></li>
+                                @endforeach
+                                @endif
+                                <li><a href="{{ route('contact_us') }}">@lang('app.contact_us')</a> </li>
+                                <li><a href="{{ route('help_view') }}">@lang('app.help')</a> </li>
+                            </ul>
+                        </div>
+                        {{-- pages end --}}
+                        {{-- social buttons --}}
+                        <div class="text-center my-4">
+                            <ul class="list-unstyled mb-0 mediaLinks">
+                                <li>
+                                    <button onclick="location.href='https://www.facebook.com/pingjobsearch/';" type="button" class="btn btn-social-icon btn-outline-facebook"><i class="fab fa-facebook"></i></button>
+                                </li>
+                                <li>
+                                    <button onclick="location.href='https://www.instagram.com/pingjobsearch/';" type="button" class="btn btn-social-icon btn-outline-instagram"><i class="fab fa-instagram"></i></button>
+                                </li>
+                                <li>
+                                    <button onclick="location.href='https://twitter.com/pingjobsearch';" type="button" class="btn btn-social-icon btn-outline-twitter"><i class="fab fa-twitter"></i></button>
+                                </li>
+                                <li>
+                                    <button onclick="location.href='https://www.linkedin.com/company/ping-job';" type="button" class="btn btn-social-icon btn-outline-linkedin"><i class="fab fa-linkedin"></i></button>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/+15109361066" target="_blank" type="button" class="btn btn-social-icon btn-outline-success" style='justify-content: center;display: flex;align-items: center;border-width: 0;'><i class="fab fa-whatsapp"></i></a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        {{-- social buttons end --}}
+                        {{-- register and social login --}}
+                        <ul class="list-unstyled footer-links-homepage">
+
+                            <!-- Authentication Links -->
+                            @auth
+                            @if (Auth::user()->is_admin())
+                            <li class="nav-item postjob-button">
+                                <a class="btn btn-outline-success " href="{{ route('client_add_view') }}">{{ __('app.register_client') }} </a>
+                            </li>
+                            @else
+                            <li class="nav-item postjob-button">
+                                <a class="btn btn-outline-success " href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                            </li>
+                            @endif
+                            @else
+                            <li class="nav-item postjob-button">
+                                <a class="btn btn-outline-success " href="{{ route('register_employer') }}">{{ __('app.register_client') }} </a>
+                            </li>
+                            <li class="nav-item postjob-button">
+                                <a class="btn btn-outline-primary " href="https://social.pingjob.com/" target="_blank">{{ __('app.social_login') }}</a>
+                            </li>
+                            @endauth
+                            <li class="nav-item postjob-button">
+                                <a class="btn btn-outline-success " href="https://www.pingjob.com/pricing">{{ __('app.price') }} </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
+            </div>
+            <div class="footer-copyright-text-wrap">
+                <p class="m-2 text-center">{!! get_text_tpl(get_option('copyright_text')) !!}</p>
             </div>
 
-        </div>
-
-
+        </footer>
     </div>
-
 
 
     <!-- Scripts -->
@@ -277,7 +590,6 @@
 
         gtag('config', 'UA-146678787-1');
     </script>
-
 
     <script data-ad-client="ca-pub-8984168971674670" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
@@ -319,14 +631,11 @@
         });
     </script>
 
-
-
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZVH8P5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     @stack('js')
-
 </body>
 
 </html>

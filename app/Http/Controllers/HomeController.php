@@ -66,10 +66,10 @@ class HomeController extends Controller
      */
 
     public function index()
-
     {
         $categories = Category::orderBy('job_count', 'desc')
             ->where('job_count', '>=', 1)->get();
+
         $top_city = DB::table('jobs')
             ->join('users as userA', 'jobs.user_id', '=', 'userA.id')
             ->select('jobs.city_name', (DB::raw('COUNT(jobs.user_id) AS total_job')))
@@ -77,7 +77,9 @@ class HomeController extends Controller
             ->having(DB::raw('COUNT(jobs.city_name)'), '>', 1)->orderBy('jobs.id', 'desc')
             ->take(15)
             ->get();
+
         $city_details = [];
+
         foreach ($top_city as $key) {
             $city_client = DB::table('jobs')
                 ->join('users as userA', 'jobs.user_id', '=', 'userA.id')
@@ -88,7 +90,9 @@ class HomeController extends Controller
                 ->get();
             array_push($city_details, (object)array($key->city_name, $key->total_job, $city_client[0]->total_client));
         }
+
         $total_city_jobe = DB::select("SELECT jobs.city_id,jobs.city_name,  COUNT(*) AS numberOfcities FROM jobs JOIN cities ON cities.id = jobs.city_id GROUP BY jobs.city_id,jobs.city_name ORDER BY COUNT(*) DESC limit 15");
+
         $premium_jobs = DB::table("jobs")
             ->join('users as userA', 'jobs.user_id', '=', 'userA.id')
             ->where('status', 1)
@@ -107,25 +111,26 @@ class HomeController extends Controller
             ->paginate(20);
 
         $total_state_job = DB::select("SELECT jobs.state_id,jobs.state_name,  COUNT(*) AS numberOfSales FROM jobs JOIN states ON states.id = jobs.state_id GROUP BY jobs.state_id,jobs.state_name ORDER BY COUNT(*) DESC limit 15");
+
         $total_vendors_job = DB::select("SELECT users.id,users.name,  COUNT(*) AS numberOfclient FROM users
             JOIN vendors ON vendors.vendor_id =  users.id
             GROUP BY users.id, users.name ORDER BY COUNT(*) DESC LIMIT 30");
         $users = new User();
+
         $top_clients = $users->topClients();
         $blog_posts = Post::whereType('post')
             ->with('author')->orderBy('id', 'desc')
             ->take(3)
             ->get();
+
         // return count($total_state_job);
         $packages = Pricing::all();
+
         return view('frontend.home', compact('categories', 'premium_jobs', 'packages', 'blog_posts', 'top_clients', 'total_city_jobe', 'total_state_job', 'total_vendors_job'));
-        //   return view('home', compact('categories', 'premium_jobs', 'packages', 'blog_posts', 'top_clients'));
     }
 
     public function test()
-
     {
-
         $categories = Category::orderBy('job_count', 'desc')->where('job_count', '>=', 1)->limit(40);
 
         $top_city = DB::table('jobs')->join('users as userA', 'jobs.user_id', '=', 'userA.id')

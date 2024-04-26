@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -372,7 +373,19 @@ class UserController extends Controller
         $job = Job::findOrFail($job_id);
 
         $title = __('app.resumes') . " For <strong>{$job->job_title}</strong>";
-        $applications = JobApplication::whereJobId($job_id)->orderBy('id', 'desc')->paginate(10);
+
+        $subquery = DB::table('job_applications')
+            ->select(DB::raw('DISTINCT email'))
+            ->where('category_id', '=', $job->category_id)
+            ->orderBy('resume_score', 'desc');
+
+        $applications = DB::table(DB::raw("({$subquery->toSql()}) as sub"))
+            ->mergeBindings($subquery) // Pass the original query object
+            ->paginate(10);
+
+        // $title = __('app.resumes');
+        // $employer_id = Auth::user()->id;
+        // $applications = JobApplication::whereEmployerId($employer_id)->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.applicants-resumes-by-job', compact('title', 'applications', 'job_id'));
     }

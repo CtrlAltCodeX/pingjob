@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Helper\Functions;
+use App\Models\Job;
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
@@ -76,7 +79,22 @@ class CategoriesController extends Controller
     {
         $id = $request->data_id;
 
-        $delete = Category::where('id', $id)->delete();
+        $delete = Category::where('id', $id)
+            ->delete();
+
+        $jobApp = JobApplication::select('id', 'email')
+            ->where('category_id', $id)
+            ->groupBy('email')
+            ->pluck('id')
+            ->toArray();
+
+        JobApplication::whereNotIn('id', $jobApp)
+            ->where('category_id', $id)
+            ->delete();
+
+        // Job::where('category_id', $id)
+        //     ->get();
+
         if ($delete) {
             return ['success' => 1, 'msg' => trans('app.category_deleted_success')];
         }

@@ -54,6 +54,16 @@ class JobController extends Controller
     {
         $user_id = Auth::user()->id;
 
+        $country = Country::find($request->country);
+
+        DB::connection('mysql2')->table('wo_job')->insert(
+            [
+                'title' => request()->job_title,
+                'category' => $request->category,
+                'description' => $request->description,
+            ]
+        );
+
         $rules = [
             'job_title' => ['required', 'string', 'max:190'],
             'position' => ['required', 'string', 'max:190'],
@@ -63,16 +73,13 @@ class JobController extends Controller
             'country' => 'required',
             'city' => 'required',
         ];
+        
         $this->validate($request, $rules);
         $parsed_date = Carbon::parse($request->deadline);
 
         $job_title = $request->job_title;
         $job_slug = unique_slug($job_title, 'Job', 'job_slug');
-
-
         $country = Country::find($request->country);
-
-
         $state_name = null;
         if ($request->state) {
             $state = State::find($request->state);
@@ -102,7 +109,6 @@ class JobController extends Controller
             'gender' => $request->gender,
             'exp_level' => $request->exp_level,
             'job_type' => $request->job_type,
-
             'experience_required_years' => $request->experience_required_years,
             'experience_plus' => $request->experience_plus,
             'description' => $request->description,
@@ -249,7 +255,7 @@ class JobController extends Controller
         $request = array('job_title' => $job_title, 'position' => $position, 'salary' => $salary, 'salary_currency' => $salary_currency, 'salary_cycle' => $salary_cycle, 'experience_required_years' => $experience_required_years, 'description' => $description, 'skills' => $skills, 'responsibilities' => $responsibilities, 'educational_requirements' => $educational_requirements, 'experience_requirements' => $experience_requirements, 'benefits' => $benefits, 'country_name' => $country_name, 'state_name' => $state_name, 'city_name' => $city_name, 'company_name' => $company_name);
         // Mail::to($email)->send(new New_Job_Of_Same_Category($request));commented by ali
         if ($email != '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($email)->send(new New_Job_Of_Same_Category($request));
+            // Mail::to($email)->send(new New_Job_Of_Same_Category($request));
         } else {
             //Invalid email format
         }
@@ -489,7 +495,7 @@ class JobController extends Controller
         $review_ratings = !empty($review_ratings[0]->review_rating) ? $review_ratings[0]->review_rating  : 0;
 
         $title = $job->job_title;
-        
+
         return view('frontend.job-view', compact('title', 'job', 'review_ratings', 'review_count', 'company', 'vendors'));
     }
 

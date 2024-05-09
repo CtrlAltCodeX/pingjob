@@ -874,24 +874,23 @@ class JobController extends Controller
         $user = new User();
         $company = $user->listOfCompany();
 
-
         $jobs = $jobs->orderBy('updated_at', 'desc')->with('employer')->paginate(10);
-
-
         // echo "<pre>"; print_r($jobs); exit();
-
-
-
 
         return view('frontend.jobs', compact('title', 'jobs', 'categories', 'countries', 'old_country', 'company'));
     }
+
     function deletedApplicant(Request $request)
     {
         $application = JobApplication::findOrFail($request->id);
+        $arr = $application->toArray();
+        unset($arr['status']);
+
         if ($application) {
             // $application_data = (array)$application;
-            ResumesRepo::create($application->toArray());
-            $application->delete();
+            ResumesRepo::create($arr);
+            $application->update(['status' => 0]);
+            // $application->delete();
             return back()->with('success', __('app.resume_deleted'));
         }
     }

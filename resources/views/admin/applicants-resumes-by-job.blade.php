@@ -23,6 +23,7 @@
         <div class="row">
             <div class="badge-primary" style="width: 100%; text-align: center; font-size: 18px; font-weight: 600;">Resumes</div>
             @foreach ($applications as $application)
+            @if($application->status)
             <div class="col-12 col-lg-6 d-flex p-1 px-3" style="border: 1px solid rgba(0, 0, 0, 0.125); font-weight: 600;">
                 <div style="width: 40%;" class="d-flex flex-column align-items-center justify-content-around">
                     <div class="" style="font-size: 50px;color:#38c172;width: fit-content;">
@@ -59,6 +60,7 @@
                 </div>
 
             </div>
+            @endif
             @endforeach
         </div>
 
@@ -81,8 +83,6 @@
 
     @endif
 </div>
-
-
 
 @endsection
 @php

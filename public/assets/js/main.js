@@ -1,7 +1,6 @@
 (function ($) {
     "use strict";
 
-
     $(document).on('change', '.country_to_state', function(e){
         e.preventDefault();
 
@@ -30,18 +29,17 @@
         });
     });
 
-
-
-    if (page_data.jobModalOpen){
+    if (page_data.jobModalOpen) {
         $('#applyJobModal').modal('show');
     }
+    
     if (page_data.flag_job_validation_fails){
         $('#jobFlagModal').modal('show');
     }
+    
     if (page_data.share_job_validation_fails){
         $('#shareByEMail').modal('show');
     }
-
 
     $(document).on('click', '.employer-follow-button', function(e){
         e.preventDefault();
@@ -72,8 +70,6 @@
             }
         });
     });
-
-     //updating-btn
 
   $(document).on('click', '.vendor_submit_btn', function (e) {
     e.preventDefault();

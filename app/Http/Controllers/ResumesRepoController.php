@@ -22,14 +22,7 @@ class ResumesRepoController extends Controller
             ->join('categories', "resumes_repos.category_id", "=", "categories.id")
             ->orderBy('resumes_repos.resume_score', 'desc')
             ->paginate(10);
-
-        // foreach ($applications as $application) {
-
-        //     $data = Functions::getResumeScore($application->resume, [$application->category_name]);
-        //     $score = $data ? $data->score : [0];
-        //     $application->score = $score[0];
-        // }
-        // dd($application);
+            
         return view('admin.applicants-resumes-repo', compact('title', 'applications'));
     }
     public function addResume()

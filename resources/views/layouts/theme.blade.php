@@ -90,7 +90,7 @@
     <!-- End Google Tag Manager -->
 
     <style>
-        .pj-footer{
+        .pj-footer {
             width: inherit !important;
         }
     </style>
@@ -490,9 +490,8 @@ $total_city_jobe = DB::select("SELECT jobs.city_id,jobs.city_name, COUNT(*) AS n
                                 <li style="color: #38c172;">@lang('app.approve_contacts')({{ $contacts->count() }})</li>
                                 <li style="color: #38c172;">@lang('app.approve_review')({{ 777 + $reviews->count() }})</li>
                                 <li style="color: #38c172;">
-                                    @lang('app.resumes')({{ 3906 + $job_applications->count() }})</li>
+                                    @lang('app.resumes')({{ $job_applications->count() }})</li>
                             </ul>
-
                         </div>
                         {{-- web stats --}}
                         {{-- pages --}}

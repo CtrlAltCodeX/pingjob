@@ -42,6 +42,10 @@ use App\Helper\Functions;
                                 @foreach ($premium_jobs as $job)
                                 @php
                                 $getState = \App\Models\State::find($job->state_id);
+                                $count = DB::table('job_applications')
+                                ->select(DB::raw('DISTINCT email'))
+                                ->where('category_id', '=', $job->category_id)
+                                ->get()->count();
                                 @endphp
                                 <div class="col-md-10 mt-4" style="background-color: white;padding: 20px;box-shadow: 0px 0px 10px #eee;border-radius: 10px;">
                                     <div class='d-flex' style="grid-gap: 30px;">
@@ -51,9 +55,9 @@ use App\Helper\Functions;
                                         <div class="d-flex flex-column w-100" style="font-size: 16px;">
                                             <div class="d-flex flex-column">
                                                 <div class="d-flex justify-content-between">
-                                                    
-                                                        <a href="{{ route('job_view', $job->job_slug) }}" class='text-dark'>{!! $job->job_title !!}</a>
-                                                        <a href="{{ route('clients_details', $job->user_id) }}" style='font-size:20px;'><b>{!! $job->company !!}</b></a>
+
+                                                    <a href="{{ route('job_view', $job->job_slug) }}" class='text-dark'>{!! $job->job_title !!}</a>
+                                                    <a href="{{ route('clients_details', $job->user_id) }}" style='font-size:20px;'><b>{!! $job->company !!}</b></a>
 
                                                     <div class="d-flex flex-column">
                                                         <span class='bg-warning p-2'>{{ date('M-d', strtotime($job->created_at)) }}</span>
@@ -67,10 +71,10 @@ use App\Helper\Functions;
                                                         {{ $getState->state_id }}
                                                         @endif
                                                     </b>
-													<div class='d-flex align-items-end flex-column'>
-														<span>Vendor - {{ $job->vendor_count }}</span>
-														<span>Applicants - {!! $job->job_applications_count !!}</span>
-													</div>
+                                                    <div class='d-flex align-items-end flex-column'>
+                                                        <span>Vendor - {{ $job->vendor_count }}</span>
+                                                        <span>Applicants - {{ $count }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-end">
@@ -463,7 +467,7 @@ use App\Helper\Functions;
                 beforeSend: function() {
                     $("#loader" + id).html('<div class="loader" ></div>');
                 },
-				headers: {
+                headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
